@@ -24,3 +24,13 @@ jobs:
     - run: npm install
     - run: npm run test:unit
     - run: echo "@kaloiannedelkov"
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.API_KEY }}
