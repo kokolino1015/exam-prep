@@ -24,6 +24,7 @@ jobs:
     - run: npm install
     - run: npm run test:unit
     - run: echo "@kaloiannedelkov"
+
   deploy:
 
     runs-on: ubuntu-latest
@@ -34,3 +35,16 @@ jobs:
         with:
           service-id: ${{ secrets.SERVICE_ID }}
           api-key: ${{ secrets.API_KEY }}
+  ui_tests:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: 'npm'
+    - run: npm install
+    - run: npx playwright install --with-deps
+    - run: npm run test:ui 
